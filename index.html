@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TerraTrace</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/app.js" defer></script>
+</head>
+<body>
+    <header>
+        <span class="headerTitle">TERRA_TRACE <span style="font-size: 10px;">v1.1.0</span></span>
+        <div class="btn">
+            <input type="file" id="csvFileInput" accept=".csv" style="display: none;">
+            <a href="#" id="importCsvBtn" style="border-color: #555; color: #aaa; margin-right: 5px;">[CSV]</a>
+            
+            <a id="modeToggleBtn" href="#">MODE: TACTICAL</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="plotMap_Tactical" id="tacticalContainer">
+            <canvas id="tacticalCanvas"></canvas>
+            <div id="tacticalScale">
+                <div class="scale-label">AREA WIDTH</div>
+                <div class="scale-bar-container">
+                    <div class="scale-bar-edge"></div>
+                    <div class="scale-bar-line"></div>
+                    <div class="scale-bar-edge"></div>
+                </div>
+                <div id="areaWidthText">0 m</div>
+            </div>
+        </div>
+
+        <div class="plotMap_Real" id="realContainer" style="display: none;">
+            <div id="osmMap"></div>
+        </div>
+
+        <div class="speedMeter">
+            <canvas id="analogMeter"></canvas>
+            <div class="digitalMeter">
+                <div id="speed">0</div>
+                <div>km/h</div>
+            </div>
+        </div>
+
+        <div class="bottomMetrics">
+            <div class="metricBox" style="text-align: left;">
+                <div class="metricLabel">ACCURACY</div>
+                <div class="metricValue" id="accuracy">±0.0 m</div>
+            </div>
+            
+            <div class="metricBox" style="text-align: center;">
+                <div class="metricLabel">ODO</div>
+                <div class="metricValue" id="odometer">00000.0 km</div>
+            </div>
+            
+            <div class="metricBox" id="tripContainer" style="text-align: right; cursor: pointer;">
+                <div class="metricLabel">TRIP (TAP)</div>
+                <div class="metricValue" id="trip">000.0 km</div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

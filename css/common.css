@@ -1,0 +1,139 @@
+@charset "UTF-8";
+
+/* ==========================================
+   🌐 全体設定
+========================================== */
+body {
+    margin: 0;
+    width: 100vw;
+    height: 100dvh; /* スマホ画面に完全フィット */
+    background-color: #050505;
+    color: #fff;
+    font-family: 'Courier New', Consolas, monospace;
+    overflow: hidden;
+    
+    /* サイバーグリッド背景 */
+    background-image: 
+        linear-gradient(rgba(0, 255, 136, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 136, 0.07) 1px, transparent 1px);
+    background-size: 30px 30px;
+    background-position: center center;
+}
+
+a { text-decoration: none; color: #00ff88; }
+
+/* ==========================================
+   📟 ヘッダー部分（スリム化：60px → 45px）
+========================================== */
+header {
+    position: fixed; 
+    top: 0; left: 0;
+    z-index: 1000;
+    background-color: rgba(5, 5, 5, 0.85); /* ほんの少し透過させて背景を透かす */
+    backdrop-filter: blur(5px); /* 背景をボカすと一気に高級感が出る！ */
+    width: 100%; 
+    height: 45px; /* 🔥 15pxスリムに！ */
+    box-sizing: border-box;
+    padding: 0 15px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid rgba(0, 255, 136, 0.2);
+}
+
+.headerTitle { 
+    font-size: 1.1rem; /* ヘッダーに合わせて少し小さく */
+    font-weight: bold; 
+    color: #00ff88; 
+}
+
+/* ボタンもヘッダーに合わせて少しコンパクトに */
+.btn a {
+    padding: 4px 10px;
+    font-size: 11px;
+}
+.btn a:hover { background-color: #00ff88; color: #000; box-shadow: 0 0 10px rgba(0,255,136,0.8); }
+
+/* ==========================================
+   🗺 メインエリア（余白調整）
+========================================== */
+main {
+    padding-top: 45px; /* ヘッダーを薄くした分、ここも詰める */
+    height: 100dvh; 
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* マップを広げる（40dvh → 50dvh） */
+.plotMap_Tactical, .plotMap_Real {
+    width: 100%; 
+    height: 50dvh; /* 🔥 画面の半分をマップに割り当て！ */
+    position: relative; 
+    background-color: #000;
+    border-bottom: 1px solid #00ff88;
+}
+
+#tacticalCanvas, #osmMap { width: 100%; height: 100%; display: block; background-color: #050505; }
+
+/* AREA WIDTH スケール */
+#tacticalScale { position: absolute; bottom: 15px; left: 15px; color: #00ff88; z-index: 10; }
+.scale-label { font-size: 10px; font-weight: bold; opacity: 0.9; letter-spacing: 1px; }
+.scale-bar-container { display: flex; align-items: center; opacity: 0.9; margin: 4px 0; }
+.scale-bar-edge { width: 1px; height: 8px; background-color: #00ff88; }
+.scale-bar-line { width: 80px; height: 1px; background-color: #00ff88; }
+#areaWidthText { font-size: 14px; font-weight: bold; }
+
+/* ==========================================
+   🏎 メーター周り
+========================================== */
+.speedMeter {
+    width: 100%; position: relative;
+    display: flex; justify-content: center;
+    margin-top: -3dvh;
+}
+
+#analogMeter {
+    display: block; width: 100% !important; max-width: 360px !important; height: auto !important;     
+}
+
+/* ==========================================
+   🏎 デジタルスピード表示（縦並びレイアウト）
+========================================== */
+.digitalMeter {
+    position: absolute;
+    top: 48%; /* メーターの半円の中心より少し下に配置 */
+    display: flex;
+    flex-direction: column; /* 🔥 横並びから「縦並び」に変更！ */
+    align-items: center;    /* 左右中央にビシッと揃える */
+    gap: 0px;               /* 数字と単位の隙間を詰める（好みで調整） */
+}
+
+#speed {
+    font-size: clamp(60px, 18vw, 90px); /* 数字をより巨大に！ */
+    line-height: 1;         /* 行間を詰めてkm/hとの一体感を出す */
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+}
+
+/* 数字の下に来る「km/h」のデザイン */
+.digitalMeter div:last-child {
+    font-size: 18px;        /* 少し控えめにして数字を際立たせる */
+    font-weight: bold;
+    color: #00ff88;
+    letter-spacing: 2px;    /* 文字の間隔を少し開けるとサイバー感アップ */
+    text-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
+    margin-top: -5px;       /* 数字との距離をさらに密着させる */
+}
+
+/* ==========================================
+   📊 底辺の3連メーター
+========================================== */
+.bottomMetrics {
+    position: absolute;
+    bottom: max(30px, env(safe-area-inset-bottom)); /* iPhoneのホームバー回避 */
+    left: 0; width: 100%; box-sizing: border-box; padding: 0 25px;
+    display: flex; justify-content: space-between; align-items: flex-end;
+}
+.metricBox { width: 33%; }
+.metricLabel { color: #00ff88; font-size: 10px; font-weight: bold; margin-bottom: 4px; letter-spacing: 1px; }
+.metricValue { color: #fff; font-size: 14px; font-weight: bold; text-shadow: 0 0 5px rgba(255,255,255,0.3); }
+#tripContainer:hover .metricValue { color: #00ff88; text-shadow: 0 0 8px #00ff88; }
