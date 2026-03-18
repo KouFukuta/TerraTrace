@@ -1,18 +1,18 @@
 @charset "UTF-8";
 
 /* ==========================================
-   🌐 全体設定
+   🌐 全体設定（サイバー背景復活！）
 ========================================== */
 body {
     margin: 0;
     width: 100vw;
-    height: 100dvh; /* スマホ画面に完全フィット */
+    height: 100dvh; 
     background-color: #050505;
     color: #fff;
     font-family: 'Courier New', Consolas, monospace;
-    overflow: hidden;
+    overflow: hidden; 
     
-    /* サイバーグリッド背景 */
+    /* 🔥 究極魔法：背景のサイバーグリッド（網目） */
     background-image: 
         linear-gradient(rgba(0, 255, 136, 0.07) 1px, transparent 1px),
         linear-gradient(90deg, rgba(0, 255, 136, 0.07) 1px, transparent 1px);
@@ -23,16 +23,16 @@ body {
 a { text-decoration: none; color: #00ff88; }
 
 /* ==========================================
-   📟 ヘッダー部分（スリム化：60px → 45px）
+   📟 ヘッダー部分（高級感のある透けスリム！）
 ========================================== */
 header {
     position: fixed; 
     top: 0; left: 0;
     z-index: 1000;
     background-color: rgba(5, 5, 5, 0.85); /* ほんの少し透過させて背景を透かす */
-    backdrop-filter: blur(5px); /* 背景をボカすと一気に高級感が出る！ */
+    backdrop-filter: blur(5px); /* 背景をボカす */
     width: 100%; 
-    height: 45px; /* 🔥 15pxスリムに！ */
+    height: 45px; 
     box-sizing: border-box;
     padding: 0 15px;
     display: flex; justify-content: space-between; align-items: center;
@@ -40,38 +40,47 @@ header {
 }
 
 .headerTitle { 
-    font-size: 1.1rem; /* ヘッダーに合わせて少し小さく */
+    font-size: 1.1rem; 
     font-weight: bold; 
     color: #00ff88; 
+    text-shadow: 0 0 8px rgba(0, 255, 136, 0.6);
 }
 
-/* ボタンもヘッダーに合わせて少しコンパクトに */
+.btn { display: flex; align-items: center; }
 .btn a {
-    padding: 4px 10px;
-    font-size: 11px;
+    display: inline-block;
+    border: 1px solid #00ff88;
+    padding: 4px 10px; margin-left: 10px;
+    font-size: 11px; font-weight: bold; border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: 0.2s; 
 }
 .btn a:hover { background-color: #00ff88; color: #000; box-shadow: 0 0 10px rgba(0,255,136,0.8); }
 
 /* ==========================================
-   🗺 メインエリア（余白調整）
+   🗺 メインエリア（🔥 Flexboxで相対レイアウト！）
 ========================================== */
 main {
-    padding-top: 45px; /* ヘッダーを薄くした分、ここも詰める */
+    padding-top: 45px; 
     height: 100dvh; 
     box-sizing: border-box;
-    position: relative;
+    display: flex;
+    flex-direction: column; /* 中身を上から下に順番に並べる！ */
 }
 
-/* マップを広げる（40dvh → 50dvh） */
+/* マップは「画面の高さの50%」をきっちり確保！ */
 .plotMap_Tactical, .plotMap_Real {
     width: 100%; 
-    height: 50dvh; /* 🔥 画面の半分をマップに割り当て！ */
+    height: 50%; 
+    flex-shrink: 0; /* 画面が狭くなってもマップは絶対に縮ませない */
     position: relative; 
     background-color: #000;
     border-bottom: 1px solid #00ff88;
 }
 
-#tacticalCanvas, #osmMap { width: 100%; height: 100%; display: block; background-color: #050505; }
+#tacticalCanvas, #osmMap { 
+    width: 100%; height: 100%; display: block; background-color: #050505; 
+}
 
 /* AREA WIDTH スケール */
 #tacticalScale { position: absolute; bottom: 15px; left: 15px; color: #00ff88; z-index: 10; }
@@ -82,57 +91,65 @@ main {
 #areaWidthText { font-size: 14px; font-weight: bold; }
 
 /* ==========================================
-   🏎 メーター周り
+   🏎 メーター周り（🔥 余った空間のド真ん中に自動配置！）
 ========================================== */
 .speedMeter {
-    width: 100%; position: relative;
-    display: flex; justify-content: center;
-    margin-top: -3dvh;
+    width: 100%; 
+    flex-grow: 1; /* 🔥 マップと底辺テキストの「間の空間」を全部もらう！ */
+    display: flex; 
+    justify-content: center; 
+    align-items: center; /* 縦方向もド真ん中に配置！ */
+    position: relative;
+    min-height: 0; /* はみ出し防止の魔法 */
 }
 
 #analogMeter {
-    display: block; width: 100% !important; max-width: 360px !important; height: auto !important;     
+    display: block; 
+    width: 100% !important; 
+    max-width: 320px !important; 
+    max-height: 100% !important; /* 🔥 画面の縦が狭い時は自動で縮む！ */
+    object-fit: contain;
 }
 
-/* ==========================================
-   🏎 デジタルスピード表示（縦並びレイアウト）
-========================================== */
 .digitalMeter {
-    position: absolute;
-    top: 48%; /* メーターの半円の中心より少し下に配置 */
-    display: flex;
-    flex-direction: column; /* 🔥 横並びから「縦並び」に変更！ */
-    align-items: center;    /* 左右中央にビシッと揃える */
-    gap: 0px;               /* 数字と単位の隙間を詰める（好みで調整） */
+    position: absolute; 
+    top: 52%; 
+    display: flex; flex-direction: column; align-items: center;
 }
 
 #speed {
-    font-size: clamp(60px, 18vw, 90px); /* 数字をより巨大に！ */
-    line-height: 1;         /* 行間を詰めてkm/hとの一体感を出す */
+    font-family: 'Courier New', Courier, monospace; 
+    font-variant-numeric: tabular-nums;
+    font-size: clamp(70px, 20vw, 100px); 
     font-weight: 900;
+    line-height: 0.8; 
     color: #fff;
-    text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.7); 
+    letter-spacing: -2px; 
 }
 
-/* 数字の下に来る「km/h」のデザイン */
 .digitalMeter div:last-child {
-    font-size: 18px;        /* 少し控えめにして数字を際立たせる */
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px; 
     font-weight: bold;
     color: #00ff88;
-    letter-spacing: 2px;    /* 文字の間隔を少し開けるとサイバー感アップ */
-    text-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
-    margin-top: -5px;       /* 数字との距離をさらに密着させる */
+    letter-spacing: 4px; 
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.6);
+    margin-top: 0px; 
 }
 
 /* ==========================================
-   📊 底辺の3連メーター
+   📊 底辺の3連メーター（🔥 一番下に配置！）
 ========================================== */
 .bottomMetrics {
-    position: absolute;
-    bottom: max(30px, env(safe-area-inset-bottom)); /* iPhoneのホームバー回避 */
-    left: 0; width: 100%; box-sizing: border-box; padding: 0 25px;
+    width: 100%; 
+    box-sizing: border-box; 
+    /* paddingの「下」の部分にiPhoneのホームバー回避（safe-area）を組み込む！ */
+    padding: 10px 25px max(20px, env(safe-area-inset-bottom)); 
     display: flex; justify-content: space-between; align-items: flex-end;
+    flex-shrink: 0; /* 文字が潰れないようにする */
 }
+
 .metricBox { width: 33%; }
 .metricLabel { color: #00ff88; font-size: 10px; font-weight: bold; margin-bottom: 4px; letter-spacing: 1px; }
 .metricValue { color: #fff; font-size: 14px; font-weight: bold; text-shadow: 0 0 5px rgba(255,255,255,0.3); }
