@@ -120,21 +120,37 @@ function drawTacticalMap() {
 // ==========================================
 // 🔴 3. サイバーメーターの描画（レイヤー順 完璧版！）
 // ==========================================
+// ==========================================
+// 🔴 3. サイバーメーターの描画
+// ==========================================
 function drawCyberMeter(speed) {
     const canvas = document.getElementById('analogMeter');
     if(!canvas) return;
     const ctx = canvas.getContext('2d');
 
-    const logicalWidth = 400, logicalHeight = 300;
+    // 🔥 修正：無駄な余白を完全に削ぎ落とした「横長パツパツ」の箱にする！
+    const logicalWidth = 500, logicalHeight = 280; 
     const dpr = Math.max(window.devicePixelRatio || 1, 3);
-    canvas.width = logicalWidth * dpr; canvas.height = logicalHeight * dpr;
-    canvas.style.width = `${logicalWidth}px`; canvas.style.height = `${logicalHeight}px`;
+    
+    canvas.width = logicalWidth * dpr; 
+    canvas.height = logicalHeight * dpr;
+    
+    // JSでサイズを固定するのをやめて、CSSの100%拡大に完全に委ねる！
+    canvas.style.width = '100%'; 
+    canvas.style.height = '100%'; 
+    
     ctx.scale(dpr, dpr);
 
-    const cx = logicalWidth / 2, cy = logicalHeight * 0.75, radius = logicalWidth * 0.42;
+    // 🔥 修正：キャンバスの限界ギリギリまでメーターを巨大化させる黄金比！
+    const cx = logicalWidth / 2; 
+    const cy = logicalHeight - 20; // キャンバスの下端ギリギリを中心に設定！
+    const radius = (logicalWidth / 2) - 30; // 左右の余白を極限まで削る！
+    
     const toRad = (deg) => deg * (Math.PI / 180);
 
     ctx.clearRect(0, 0, logicalWidth, logicalHeight);
+    
+    // ... (この下の const maxSpeed = 180; 以降は今までと同じでOK！)
     
     const maxSpeed = 180;
     const currentSpeed = Math.min(Math.max(speed, 0), maxSpeed);

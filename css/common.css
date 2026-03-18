@@ -91,36 +91,33 @@ main {
 #areaWidthText { font-size: 14px; font-weight: bold; }
 
 /* ==========================================
-   🏎 メーター周り（🔥 余った空間のド真ん中に自動配置！）
+   🏎 メーター周り（完全中央揃え！）
 ========================================== */
-.speedMeter {
-    width: 100%; 
-    flex-grow: 1; /* 🔥 マップと底辺テキストの「間の空間」を全部もらう！ */
-    display: flex; 
-    justify-content: center; 
-    align-items: center; /* 縦方向もド真ん中に配置！ */
-    position: relative;
-    min-height: 0; /* はみ出し防止の魔法 */
-}
-
 #analogMeter {
     display: block; 
     width: 100% !important; 
-    max-width: 320px !important; 
-    max-height: 100% !important; /* 🔥 画面の縦が狭い時は自動で縮む！ */
+    max-width: 90vw !important; 
+    max-height: 85% !important; 
     object-fit: contain;
+    
+    /* 🔥 修正：左右の余白を自動（auto）にして、強制的にド真ん中に固定する！！ */
+    margin: 0 auto 5px auto; 
 }
 
 .digitalMeter {
     position: absolute; 
-    top: 52%; 
+    /* 🔥 修正3：メーターが少し縮んだ分、数字も気持ち上に持ち上げる！ */
+    bottom: 20%; 
+    left: 50%;
+    transform: translate(-50%, 0); 
     display: flex; flex-direction: column; align-items: center;
 }
 
 #speed {
     font-family: 'Courier New', Courier, monospace; 
     font-variant-numeric: tabular-nums;
-    font-size: clamp(70px, 20vw, 100px); 
+    /* 数字も少しだけマイルドに */
+    font-size: clamp(60px, 18vw, 100px); 
     font-weight: 900;
     line-height: 0.8; 
     color: #fff;
@@ -130,12 +127,13 @@ main {
 
 .digitalMeter div:last-child {
     font-family: 'Courier New', Courier, monospace;
-    font-size: 20px; 
+    /* 🔥 単位の「km/h」も画面サイズに合わせて相対的に伸び縮みさせる！ */
+    font-size: clamp(16px, 4vw, 24px); 
     font-weight: bold;
     color: #00ff88;
     letter-spacing: 4px; 
     text-shadow: 0 0 10px rgba(0, 255, 136, 0.6);
-    margin-top: 0px; 
+    margin-top: 5px; 
 }
 
 /* ==========================================
