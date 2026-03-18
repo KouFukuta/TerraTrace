@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 /* ==========================================
-   🌐 全体設定（サイバー背景復活！）
+   🌐 全体設定（画面全体を1枚のグリッドにする！）
 ========================================== */
 body {
     margin: 0;
@@ -12,7 +12,7 @@ body {
     font-family: 'Courier New', Consolas, monospace;
     overflow: hidden; 
     
-    /* 🔥 究極魔法：背景のサイバーグリッド（網目） */
+    /* 🔥 究極魔法：この背景が一番下から一番上まで全部を覆う！ */
     background-image: 
         linear-gradient(rgba(0, 255, 136, 0.07) 1px, transparent 1px),
         linear-gradient(90deg, rgba(0, 255, 136, 0.07) 1px, transparent 1px);
@@ -23,20 +23,19 @@ body {
 a { text-decoration: none; color: #00ff88; }
 
 /* ==========================================
-   📟 ヘッダー部分（高級感のある透けスリム！）
+   📟 ヘッダー部分（🔥 黒背景を消して浮かせる！）
 ========================================== */
 header {
     position: fixed; 
     top: 0; left: 0;
     z-index: 1000;
-    background-color: rgba(5, 5, 5, 0.85); /* ほんの少し透過させて背景を透かす */
-    backdrop-filter: blur(5px); /* 背景をボカす */
+    /* ❌ 背景色と境界線を消去！グリッドの上に直接文字を乗せる！ */
+    background-color: transparent; 
     width: 100%; 
-    height: 45px; 
+    height: 60px; 
     box-sizing: border-box;
-    padding: 0 15px;
+    padding: 0 20px;
     display: flex; justify-content: space-between; align-items: center;
-    border-bottom: 1px solid rgba(0, 255, 136, 0.2);
 }
 
 .headerTitle { 
@@ -50,40 +49,48 @@ header {
 .btn a {
     display: inline-block;
     border: 1px solid #00ff88;
-    padding: 4px 10px; margin-left: 10px;
+    padding: 6px 12px; margin-left: 10px;
     font-size: 11px; font-weight: bold; border-radius: 4px;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.5); /* ボタンの中だけ少し黒くする */
     transition: 0.2s; 
 }
-.btn a:hover { background-color: #00ff88; color: #000; box-shadow: 0 0 10px rgba(0,255,136,0.8); }
 
 /* ==========================================
-   🗺 メインエリア（🔥 Flexboxで相対レイアウト！）
+   🗺 メインエリア（🔥 画面の分断をなくす！）
 ========================================== */
 main {
-    padding-top: 45px; 
     height: 100dvh; 
     box-sizing: border-box;
     display: flex;
-    flex-direction: column; /* 中身を上から下に順番に並べる！ */
+    flex-direction: column;
+    padding-top: 60px; /* ヘッダーの分だけ下げる */
+    /* iPhoneのホームバー回避をここに設定 */
+    padding-bottom: max(25px, env(safe-area-inset-bottom)); 
 }
 
-/* マップは「画面の高さの50%」をきっちり確保！ */
+/* マップの箱を透明にする！ */
 .plotMap_Tactical, .plotMap_Real {
     width: 100%; 
-    height: 50%; 
-    flex-shrink: 0; /* 画面が狭くなってもマップは絶対に縮ませない */
+    height: 55%; /* 領域を少し広めに確保 */
+    flex-shrink: 0; 
     position: relative; 
-    background-color: #000;
-    border-bottom: 1px solid #00ff88;
+    /* ❌ 真っ黒な背景と緑の横線を消去して、下のグリッドを透けさせる！ */
+    background-color: transparent; 
+    border-bottom: none; 
 }
 
-#tacticalCanvas, #osmMap { 
-    width: 100%; height: 100%; display: block; background-color: #050505; 
+/* キャンバスの黒背景も透明にして、グリッドの上に緑の線だけを描画させる！ */
+#tacticalCanvas { 
+    width: 100%; height: 100%; display: block; 
+    background-color: transparent; 
+}
+#osmMap { 
+    width: 100%; height: 100%; display: block; 
+    background-color: #050505; /* リアルマップの時だけは黒背景を敷く */
 }
 
-/* AREA WIDTH スケール */
-#tacticalScale { position: absolute; bottom: 15px; left: 15px; color: #00ff88; z-index: 10; }
+/* AREA WIDTH スケール（左下にピタッと配置） */
+#tacticalScale { position: absolute; bottom: 0px; left: 15px; color: #00ff88; z-index: 10; }
 .scale-label { font-size: 10px; font-weight: bold; opacity: 0.9; letter-spacing: 1px; }
 .scale-bar-container { display: flex; align-items: center; opacity: 0.9; margin: 4px 0; }
 .scale-bar-edge { width: 1px; height: 8px; background-color: #00ff88; }
@@ -91,23 +98,28 @@ main {
 #areaWidthText { font-size: 14px; font-weight: bold; }
 
 /* ==========================================
-   🏎 メーター周り（完全中央揃え！）
+   🏎 メーター周り（🔥 限界まで巨大化！）
 ========================================== */
+.speedMeter {
+    width: 100%; 
+    flex-grow: 1; /* マップと底辺の間の空間を全部使う */
+    display: flex; justify-content: center; align-items: center;
+    position: relative;
+    min-height: 0;
+}
+
 #analogMeter {
     display: block; 
     width: 100% !important; 
-    max-width: 90vw !important; 
-    max-height: 85% !important; 
+    /* 🔥 横幅を画面の95%まで限界突破で広げる！ */
+    max-width: 95vw !important; 
+    max-height: 100% !important; 
     object-fit: contain;
-    
-    /* 🔥 修正：左右の余白を自動（auto）にして、強制的にド真ん中に固定する！！ */
-    margin: 0 auto 5px auto; 
 }
 
 .digitalMeter {
     position: absolute; 
-    /* 🔥 修正3：メーターが少し縮んだ分、数字も気持ち上に持ち上げる！ */
-    bottom: 20%; 
+    bottom: 5%; /* 針の根元にピタッと合わせる */
     left: 50%;
     transform: translate(-50%, 0); 
     display: flex; flex-direction: column; align-items: center;
@@ -116,8 +128,7 @@ main {
 #speed {
     font-family: 'Courier New', Courier, monospace; 
     font-variant-numeric: tabular-nums;
-    /* 数字も少しだけマイルドに */
-    font-size: clamp(60px, 18vw, 100px); 
+    font-size: clamp(70px, 20vw, 120px); 
     font-weight: 900;
     line-height: 0.8; 
     color: #fff;
@@ -127,8 +138,7 @@ main {
 
 .digitalMeter div:last-child {
     font-family: 'Courier New', Courier, monospace;
-    /* 🔥 単位の「km/h」も画面サイズに合わせて相対的に伸び縮みさせる！ */
-    font-size: clamp(16px, 4vw, 24px); 
+    font-size: 20px; 
     font-weight: bold;
     color: #00ff88;
     letter-spacing: 4px; 
@@ -137,15 +147,14 @@ main {
 }
 
 /* ==========================================
-   📊 底辺の3連メーター（🔥 一番下に配置！）
+   📊 底辺の3連メーター（一番下に綺麗に整列！）
 ========================================== */
 .bottomMetrics {
     width: 100%; 
     box-sizing: border-box; 
-    /* paddingの「下」の部分にiPhoneのホームバー回避（safe-area）を組み込む！ */
-    padding: 10px 25px max(20px, env(safe-area-inset-bottom)); 
+    padding: 0 25px; 
     display: flex; justify-content: space-between; align-items: flex-end;
-    flex-shrink: 0; /* 文字が潰れないようにする */
+    flex-shrink: 0; 
 }
 
 .metricBox { width: 33%; }

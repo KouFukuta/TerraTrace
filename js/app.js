@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
         isRealMode = !isRealMode; 
         document.getElementById('tacticalContainer').style.display = isRealMode ? 'none' : 'block';
         document.getElementById('realContainer').style.display = isRealMode ? 'block' : 'none';
-        modeToggleBtn.textContent = isRealMode ? 'MODE: REAL' : 'MODE: TACTICAL'; 
+        modeToggleBtn.textContent = isRealMode ? 'MODE: RADAR' : 'MODE: TRACE'; 
         
         if (isRealMode && map) {
             // 🔥 魔法の3ステップでズームを最適化！
