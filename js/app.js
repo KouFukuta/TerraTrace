@@ -263,10 +263,23 @@ if (navigator.geolocation) {
         
         drawCyberMeter(speed);
 
+        // 距離計算（少しでも動いたら加算）
         let movedDist = 0;
         if (lastLocation) {
             movedDist = getDistanceInMeters(lastLocation.lat, lastLocation.lng, lat, lng);
-            if (movedDist < 2.0) movedDist = 0; 
+            if (movedDist < 2.0) movedDist = 0; // iOSのノイズフィルター！
+            
+            // 🔥 追加：ワープキャンセラー！！！
+            // もし「1回のGPS受信（数秒）」で「500m以上」移動していたら、
+            // それは「移動」じゃなくて「アプリ起動時のワープ」とみなして距離をノーカンにする！
+            if (movedDist > 500) {
+                console.log("🚀 ワープを検知！ ODOへの加算をキャンセルしました。");
+                movedDist = 0; 
+                
+                // ※ちなみに、地図上に「直線の線」が引かれるのを完全に防ぐには、
+                // routeCoordinates を「線の配列の配列（多次元配列）」に作り直す必要があるから、
+                // 今回は一旦「メーターが爆発しないこと（データ破壊の防止）」を最優先にするね！
+            }
         }
 
         if (movedDist > 0) {
